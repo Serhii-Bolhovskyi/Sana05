@@ -1,8 +1,8 @@
 namespace Sana05.Interfaces;
 
-public interface IBorrowable
+public interface IBorrowable 
 {
-    bool IsBorrowed { get; set; }
+    bool IsBorrowed { get; }
 
     void Borrow(string borrower);
     void Return();

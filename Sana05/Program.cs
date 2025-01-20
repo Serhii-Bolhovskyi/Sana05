@@ -7,11 +7,17 @@ class Program
     {
         Book book1 = new Book("San Antonio", "Mario", 1988, 305);
         book1.DisplayInfo();
+        book1.Borrow("Serhii");
+        book1.Return();
 
         Journal journal = new Journal("Arrow", "John", 2022, "e24sd44");
-        journal.DisplayInfo();
-
-        EBook eBook = new EBook("Adventure", "Sara", 2024, "pdf");
-        eBook.DisplayInfo();
+        journal.Borrow("John");
+        journal.Borrow("Jane");
+        journal.Return();
+        journal.Borrow("Jane");
+        // journal.DisplayInfo();
+        //
+        // EBook eBook = new EBook("Adventure", "Sara", 2024, "pdf");
+        // eBook.DisplayInfo();
     }
 }
