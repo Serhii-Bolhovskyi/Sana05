@@ -6,6 +6,9 @@ abstract public class LibraryItem
     protected string Author { get; set; }
     protected int Year { get; set; }
 
+    protected BorrowInfo? borrowInfo;
+    public bool IsBorrowed => borrowInfo != null;
+
     public LibraryItem(string title, string author, int year)
     {
         Title = title;
@@ -13,5 +16,5 @@ abstract public class LibraryItem
         Year = year;
     }
 
-    abstract public void DisplayInfo();
+    abstract public string DisplayInfo();
 }

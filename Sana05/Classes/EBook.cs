@@ -9,8 +9,8 @@ public class EBook : LibraryItem
         FileFormat = fileFormat;
     }
 
-    public override void DisplayInfo()
+    public override string DisplayInfo()
     {
-        Console.WriteLine($"Book: {Title}\nAuthor: {Author}\nYear: {Year}\nFile Format: { FileFormat}");
+        return ($"EBook: {Title}\nAuthor: {Author}\nYear: {Year}\nFile Format: { FileFormat}");
     }
 }

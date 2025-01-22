@@ -12,9 +12,9 @@ public class Journal : LibraryItem, IBorrowable
         Issue = issue;
     }
 
-    public override void DisplayInfo()
+    public override string DisplayInfo()
     {
-        Console.WriteLine($"Journal: {Title}\nAuthor: {Author}\nYear: {Year}\nIssue: {Issue}");
+        return ($"Journal: {Title}\nAuthor: {Author}\nYear: {Year}\nIssue: {Issue}");
     }
     
     public bool IsBorrowed => borrowInfo != null;
@@ -23,21 +23,21 @@ public class Journal : LibraryItem, IBorrowable
     {
         if (IsBorrowed)
         {
-            Console.WriteLine($"The Journal is already borrowed by {borrowInfo!.BorrowerName} on {borrowInfo.BorrowDate}.");
+            Console.WriteLine($"The Journal '{Title}' (Issue: {Issue}) is already borrowed by {borrowInfo!.BorrowerName} on {borrowInfo.BorrowDate}.");
             return;
         }
-        borrowInfo = new BorrowInfo(borrower, DateTime.Now.DayOfWeek);
-        Console.WriteLine($"The Journal '{Title}', Issue: {Issue} has been borrowed by {borrower} on {DateTime.Now.DayOfWeek}.");
+        borrowInfo = new BorrowInfo(borrower, DateTime.Now);
+        Console.WriteLine($"The Journal '{Title}' (Issue: {Issue}) has been borrowed by {borrower} on {DateTime.Now}.");
     }
     public void Return()
     {
         if (!IsBorrowed)
         {
-            Console.WriteLine($"The Journal '{Title}', Issue: {Issue}  is not currently borrowed.");
+            Console.WriteLine($"The Journal '{Title}' (Issue: {Issue}) is not currently borrowed.");
             return;
         }
 
-        Console.WriteLine($"The Journal '{Title}', Issue: {Issue} borrowed by {borrowInfo!.BorrowerName} on {borrowInfo.BorrowDate} has been returned.");
+        Console.WriteLine($"The Journal '{Title}' (Issue: {Issue}) borrowed by {borrowInfo!.BorrowerName} on {borrowInfo.BorrowDate} has been returned.");
         borrowInfo = null;
     }
 }
