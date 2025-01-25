@@ -17,4 +17,6 @@ abstract public class LibraryItem
     }
 
     abstract public string DisplayInfo();
+    
+    public string GetTitle() => Title;
 }

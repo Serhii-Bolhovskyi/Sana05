@@ -1,4 +1,6 @@
-﻿namespace Sana05;
+﻿using Sana05.Interfaces;
+
+namespace Sana05;
 using Classes;
 
 class Program
@@ -15,15 +17,8 @@ class Program
         libraryItems.Add(new Journal("Times", "John L", 2022, "2025 jan"));
         libraryItems.Add( new EBook("Main Adventure", "Sara Mayer", 2024, "pdf"));
         
-
-        // libraryItems[0].Borrow("Serhii");
-        
         foreach (LibraryItem item in libraryItems)
             {
-                /* old way  
-                if (atm is Terminal)
-                    (atm as Terminal).DisplayMenu();*/
-                /* modern way */
                 (item as Book)?.Borrow("Serhii");
             }
         
@@ -50,13 +45,33 @@ class Program
                     break;  
                 case "2":
                     Console.WriteLine("Available elements: ");
+                    Console.WriteLine("----------");
                     foreach (LibraryItem item in libraryItems)
                     {
-                        if(item != null)
-                        Console.WriteLine(item.DisplayInfo());
-                        Console.WriteLine("----------");
+                        if (item is IBorrowable borrowableItem && !borrowableItem.IsBorrowed)
+                            Console.WriteLine(item.DisplayInfo());
                     }
                     break;  
+                case "3":
+                    Console.WriteLine("Enter title for borrow: ");
+                    string borrowTitle = Console.ReadLine();
+                    
+                    var itemToBorrow = libraryItems.FirstOrDefault(item => item is IBorrowable && item.GetTitle() == borrowTitle );
+
+                    if (itemToBorrow is IBorrowable borrowable)
+                    {
+                        Console.Write("Enter borrower name: ");
+                        string borrowerName = Console.ReadLine();
+                        borrowable.Borrow(borrowerName);
+                    }
+                    else
+                    {
+                        Console.Write("Item not found or not borrowable.");
+                    }
+                    
+                    break;  
+                case "4":
+                    
                 case "5":
                     Console.WriteLine("Exit the program");
                     exit = true;
