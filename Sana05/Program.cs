@@ -7,20 +7,15 @@ class Program
 {
     static void Main(string[] args)
     {
-        List<LibraryItem> FindAvailableItems(List<LibraryItem> items)
-        {
-            return items.Where(item => !item.IsBorrowed).ToList();
-        }
-        
         List<LibraryItem> libraryItems = new List<LibraryItem>();
         libraryItems.Add(new Book("Green Mile", "Stephen King", 1996, 305));
         libraryItems.Add(new Journal("Times", "John L", 2022, "2025 jan"));
         libraryItems.Add( new EBook("Main Adventure", "Sara Mayer", 2024, "pdf"));
         
-        foreach (LibraryItem item in libraryItems)
-            {
-                (item as Book)?.Borrow("Serhii");
-            }
+        // foreach (LibraryItem item in libraryItems)
+        //     {
+        //         (item as Book)?.Borrow("Serhii");
+        //     }
         
         bool exit = false;
         while (!exit)
@@ -58,11 +53,11 @@ class Program
                     
                     var itemToBorrow = libraryItems.FirstOrDefault(item => item is IBorrowable && item.GetTitle() == borrowTitle );
 
-                    if (itemToBorrow is IBorrowable borrowable)
+                    if (itemToBorrow != null)
                     {
                         Console.Write("Enter borrower name: ");
                         string borrowerName = Console.ReadLine();
-                        borrowable.Borrow(borrowerName);
+                        ((IBorrowable)itemToBorrow).Borrow(borrowerName);
                     }
                     else
                     {
@@ -71,7 +66,19 @@ class Program
                     
                     break;  
                 case "4":
+                    Console.WriteLine("Enter title for borrow: ");
+                    string returnTitle = Console.ReadLine();
                     
+                    var itemToReturn = libraryItems.FirstOrDefault(item => item is IBorrowable borrowable && item.GetTitle() == returnTitle && borrowable.IsBorrowed);
+                    if (itemToReturn != null)
+                    {
+                        ((IBorrowable)itemToReturn).Return();
+                    }
+                    else
+                    {
+                        Console.Write("Item not found or not borrowable.");
+                    }
+                    break;
                 case "5":
                     Console.WriteLine("Exit the program");
                     exit = true;
@@ -81,22 +88,5 @@ class Program
                     break;
             }
         }
-        
-        /*Book book1 = new Book("Green Mile", "Stephen King", 1988, 305);
-        book1.DisplayInfo();
-        book1.Borrow("Serhii");
-        book1.Borrow("James");
-        book1.Return();
-        book1.Borrow("James");
-
-        Journal journal = new Journal("Times", "John L", 2022, "2025 jan");
-        journal.DisplayInfo();
-        journal.Borrow("John");
-        journal.Borrow("Jane");
-        journal.Return();
-        journal.Borrow("Jane");*/
-    
-        // EBook eBook = new EBook("Adventure", "Sara", 2024, "pdf");
-        // eBook.DisplayInfo();
     }
 }
